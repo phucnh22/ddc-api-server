@@ -1,0 +1,14 @@
+# Local .terraform directories
+**/.terraform/*
+**/.terraform.lock*
+**/reference*
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+**/phuc_edu.pem
+*.pem
+
+**/reference
+
+
