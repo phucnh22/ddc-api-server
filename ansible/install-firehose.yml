@@ -1,0 +1,10 @@
+---
+- name: Install application
+  hosts: all
+
+  
+  handlers:
+    - import_tasks: handlers/main.yml
+
+  roles:
+    - role: firehose
