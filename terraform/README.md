@@ -1,0 +1,5 @@
+- Fill in the prod.tfvars (or staging if you so prefer)
+  - Edit the necessary variables to suit with your AWS set up
+- Execute `terraform init`
+- Execute `terraform plan -var-file=prod.tfvars` to verify changes
+- Execute `terraform apply -var-file=prod.tfvars` to apply to AWS
