@@ -7,10 +7,14 @@ terraform/.terraform/*
 *.tfstate
 *.tfstate.*
 
+# secret
 **/phuc_edu.pem
 *.pem
-
 **/reference
 */credentials
 
+#pycache
+*__pycache__
+
+# Personal note
 note.md
