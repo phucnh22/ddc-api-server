@@ -4,18 +4,16 @@
     path: /home/ubuntu/{{ app_name }}
     state: directory
 
-#- name: disable lighttpd
-#  systemd: name=lighttpd state=stopped enabled=no  # To avoid conflicts with nginx
-
 - name: clone repo to the directory
   git:
     repo: 'https://github.com/{{ github_user }}/{{ app_name }}.git'
     dest: /home/ubuntu/{{ app_name }}
     update: yes  # Does a git pull if the repo already exists
 
+# python 3.8
 - name: Manually create the initial virtualenv
   command:
-    cmd: python3 -m venv /home/ubuntu/{{ app_name }}/venv
+    cmd: python3.8 -m venv /home/ubuntu/{{ app_name }}/venv
     creates: "/home/ubuntu/{{ app_name }}/venv"
 
 - name: install modules in a virtualenv
