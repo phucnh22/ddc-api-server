@@ -1,0 +1,13 @@
+---
+# For setting up the ssl certs
+domain_name: phucnh22.online
+ssl_email: phucnguyen22121996@gmail.com
+
+# an email address where Certbot can send urgent notices about the domain or registration.
+# This should be the address of the web server administrator.
+
+# for use in the application role
+database_user: app_db_user
+database_password: strongpassword123
+database_name: flaskappdevappdb 
+database_host: flaskappdevappdb.cletojvm70fs.eu-west-3.rds.amazonaws.com ## database endpoint - know after deploy terraform

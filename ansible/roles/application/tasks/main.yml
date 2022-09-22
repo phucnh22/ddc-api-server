@@ -1,0 +1,67 @@
+---
+- name: ensure a directory exists or create it
+  file: 
+    path: /home/ubuntu/edu-flask-app
+    state: directory
+
+#- name: disable lighttpd
+#  systemd: name=lighttpd state=stopped enabled=no  # To avoid conflicts with nginx
+
+- name: clone repo to the directory
+  git:
+    repo: 'https://github.com/{{ github_user }}/{{ app_name }}.git'
+    dest: /home/ubuntu/edu-flask-app
+    update: yes  # Does a git pull if the repo already exists
+
+- name: Manually create the initial virtualenv
+  command:
+    cmd: python3 -m venv /home/ubuntu/edu-flask-app/venv
+    creates: "/home/ubuntu/edu-flask-app/venv"
+
+- name: install modules in a virtualenv
+  become: yes
+  pip:
+    requirements: /home/ubuntu/edu-flask-app/requirements.txt
+    virtualenv: /home/ubuntu/edu-flask-app/venv
+    virtualenv_python: python3.7
+
+- name: execute db init script
+  command:
+    cmd: /home/ubuntu/edu-flask-app/venv/bin/python3 /home/{{ application_user }}/{{ app_name }}/init_db.py
+  environment:
+    database_user: app_db_user
+    database_password: strongpassword123
+    database_name: flaskappdevappdb 
+    database_host: flaskappdevappdb.cletojvm70fs.eu-west-3.rds.amazonaws.com 
+    
+# Configure app systemd service and nginx
+- name: copy template systemd service config
+  become: yes
+  template:
+    src: .service
+    dest: /etc/systemd/system/{{ app_name }}.service 
+
+
+# TODO: try systemd
+- name: start systemd app service
+  become: yes
+  systemd: name={{ app_name }} state=restarted enabled=yes
+
+#- name: start systemd
+#  become: yes
+#  command:
+#    cmd: systemctl start {{ app_name }}.service && systemctl enable {{ app_name }}.service
+
+- name: Copy nginx app server block
+  become: yes
+  template:
+    src: edu-flask-app.conf
+    dest: /etc/nginx/conf.d/edu-flask-app.conf
+  notify: reload nginx
+
+#- name: open firewall for nginx
+#  become: yes
+#  ufw:
+#    rule: allow
+#    name: Nginx Full
+#  notify: reload nginx

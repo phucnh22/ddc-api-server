@@ -1,0 +1,23 @@
+---
+
+- name: reload nginx
+  become: yes
+  service:
+    name: nginx
+    state: reloaded
+
+# For Metabase app
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+  become: yes
+
+- name: restart metabase
+  service:
+    name: metabase
+    state: restarted
+  become: yes
+
+- name: remove old versions
+  include_tasks: upgrade_cleanup.yml
+  when: metabase_upgrade_cleanup

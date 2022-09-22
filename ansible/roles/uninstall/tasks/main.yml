@@ -1,0 +1,7 @@
+---
+
+- name: Remove NodeJS
+  apt:
+    pkg: nodejs
+    state: absent
+  become: yes

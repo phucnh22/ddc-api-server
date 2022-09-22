@@ -1,0 +1,7 @@
+---
+- name: Install nginx and webserver
+  hosts: all
+  become: yes
+
+  roles:
+    - role: setup_instance

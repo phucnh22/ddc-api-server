@@ -1,0 +1,11 @@
+---
+- name: Install nginx and letsencrypt
+  handlers:
+    - import_tasks: handlers/main.yml
+  hosts: all
+
+  roles:
+    - role: nginx
+      become: yes
+      become_method: sudo
+

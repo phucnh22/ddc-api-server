@@ -1,0 +1,10 @@
+[Unit]
+Description=digdag
+After=network.target
+
+[Service]
+Restart=always
+ExecStart=/bin/sh -c "/usr/local/bin/digdag server --bind 0.0.0.0 --config /etc/digdag.properties --task-log /var/log/digdag/ --access-log /var/log/digdag"
+
+[Install]
+WantedBy=multi-user.target

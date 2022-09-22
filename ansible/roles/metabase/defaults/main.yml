@@ -1,0 +1,41 @@
+---
+app_name: edu-flask-app
+github_user: phucnh22
+application_user: ubuntu
+
+metabase_version: v0.41.5
+metabase_upgrade_cleanup: true
+
+metabase_user: metabase
+metabase_group: metabase
+
+metabase_app_dir: /opt/metabase
+metabase_jarfile: "{{ metabase_app_dir }}/{{ metabase_version }}/metabase.jar"
+metabase_jvm_args: "-Djava.net.preferIPv4Stack=True"
+
+metabase_log_dir: /var/log/metabase
+metabase_log_file: "{{ metabase_log_dir }}/metabase.log"
+metabase_working_directory: "/home/{{ metabase_user }}"
+
+metabase_host: 127.0.0.1
+metabase_port: 3000
+
+metabase_admin:
+  first_name: Metabase
+  last_name: Admin
+  email: example@example.com
+  password: metabase123
+
+metabase_databases: []
+
+metabase_prefs:
+  site_name: Metabase
+  allow_tracking: false
+
+use_own_database: true
+metabase_db: flaskappdevappdb
+metabase_db_type: postgres
+metabase_db_host: flaskappdevappdb.cletojvm70fs.eu-west-3.rds.amazonaws.com
+metabase_db_port: 5432
+metabase_db_user: app_db_user
+metabase_db_pass: strongpassword123
