@@ -14,7 +14,7 @@ terraform/.terraform/*
 */credentials
 
 #pycache
-*__pycache__
+__pycache__/
 
 # Personal note
 note.md
