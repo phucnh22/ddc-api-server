@@ -15,8 +15,9 @@
 - name: Install the agent
   become: yes
   become_flags: "-E"
-  chdir: /opt/amazon-kinesis-agent
-  command: ./setup --install
+  command:
+    cmd: ./setup --install
+    chdir: /opt/amazon-kinesis-agent
 
 - name: Remove default agent.json
   become: yes
