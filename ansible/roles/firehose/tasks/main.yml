@@ -12,8 +12,8 @@
     dest: /opt/amazon-kinesis-agent
     update: yes  # Does a git pull if the repo already exists
 
-- name: Remove default agent.json
-  command: sudo -E /opt/amazon-kinesis-agent/setup --install
+- name: Install the agent
+  command: cd /opt/amazon-kinesis-agent && ./setup --install
 
 - name: Remove default agent.json
   become: yes
