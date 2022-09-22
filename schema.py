@@ -6,6 +6,15 @@ class Event(BaseModel):
     metadata: Dict[str, Any]
     timestampUTC: int
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "eventName": "Log in",
+                "metadata": {},
+                "timestampUTC": 1663761600,
+            }
+        }
+
 class TrackBody(BaseModel):
     userId: str
     events: List[Event]

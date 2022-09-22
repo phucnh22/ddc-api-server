@@ -1,0 +1,9 @@
+{
+    "firehose.endpoint":"https://firehose.eu-west-3.amazonaws.com",
+    "flows":[
+       {
+          "filePattern":"/opt/apiserver/track.log",
+          "deliveryStream":"PUT-S3-phucdemo"
+       }
+    ]
+ }  

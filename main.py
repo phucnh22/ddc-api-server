@@ -1,65 +1,57 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
+import time
+import logging
 
 from typing import Optional
 from schema import AliasBody, ProfileBody, TrackBody,Event
 
-# ENVIRONMENT
-user_tracks = []
-log_1 = TrackBody(
-    userId='001',
-    events= [Event(eventName= 'Log in', 
-                  metadata= {'test':'metadata'}, 
-                  timestampUTC= 1663761600),
-            Event(eventName= 'Search', 
-                  metadata= {'test':'metadata'}, 
-                  timestampUTC= 1663763400),
-    ]
-)
-log_2 = TrackBody(
-    userId='002',
-    events= [Event(eventName= 'Log in', 
-                  metadata= {'test':'metadata'}, 
-                  timestampUTC= 1663761600),
-            Event(eventName= 'Search', 
-                  metadata= {'test':'metadata'}, 
-                  timestampUTC= 1663763420),
-    ]
-)
 
-user_tracks.append(log_1)
-user_tracks.append(log_2)
+def generate_timestamp_manually(trackbody):
+    for i,content in enumerate(trackbody.events):
+        trackbody.events[i].timestampUTC = int(time.time())
+    return trackbody
 
 
 app = FastAPI()
-
-@app.get("/")
-async def read_all_user(skip_user: Optional[str]=None):
-    if skip_user:
-        new_tracks=[log for log in user_tracks if log.userId != skip_user]
-        return new_tracks
-    return user_tracks
-
 
 @app.post('/track')
 def track_post(body: TrackBody):
     """
     Log events related with a particular user
     """
-    user_tracks.append(body)
-    return body
+    logging.basicConfig(
+        filename='track.log', 
+        level=logging.DEBUG,
+        format='%(message)s')
+    response = generate_timestamp_manually(body)
+    response =  {
+        'post_request':'track',
+        'value': {"userId": response.userId, "events": [dict(evnt) for evnt in response.events]}
+    }
+    logging.debug(response)  
+    
 
-@app.post('/alias', response_model=None)
-def alias_post(body: AliasBody) -> None:
+@app.post('/alias')
+def alias_post(body: AliasBody):
     """
     Assotiate different identifiers to the same entity.
     """
-    pass
+    response =  {
+        'post_request':'alias',
+        'value': dict(body)
+    }
+    logging.debug(response)  
 
 
-@app.post('/profile', response_model=None)
-def profile_post(body: ProfileBody) -> None:
+@app.post('/profile')
+def profile_post(body: ProfileBody):
     """
     Save profile attributes for an particular user
     """
-    pass
+    response =  {
+        'post_request':'profile',
+        'value': dict(body)
+    }
+    logging.debug(response)  
+    
