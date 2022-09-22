@@ -14,7 +14,8 @@
 
 - name: Install the agent
   become: yes
-  command: sudo -E /opt/amazon-kinesis-agent/setup --install
+  become_flags: "-E"
+  command: /opt/amazon-kinesis-agent/setup --install
 
 - name: Remove default agent.json
   become: yes
