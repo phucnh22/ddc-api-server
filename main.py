@@ -12,6 +12,11 @@ def generate_timestamp_manually(trackbody):
         trackbody.events[i].timestampUTC = int(time.time())
     return trackbody
 
+logging.basicConfig(
+    filename='track.log', 
+    level=logging.DEBUG,
+    format='%(message)s')
+
 
 app = FastAPI()
 
@@ -20,10 +25,6 @@ def track_post(body: TrackBody):
     """
     Log events related with a particular user
     """
-    logging.basicConfig(
-        filename='track.log', 
-        level=logging.DEBUG,
-        format='%(message)s')
     response = generate_timestamp_manually(body)
     response =  {
         'post_request':'track',
