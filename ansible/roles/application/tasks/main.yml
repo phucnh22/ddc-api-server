@@ -15,7 +15,7 @@
 
 - name: Manually create the initial virtualenv
   command:
-    cmd: python3 -m venv /home/ubuntu/edu-flask-app/venv
+    cmd: python3 -m venv /home/ubuntu/{{ app_name }}/venv
     creates: "/home/ubuntu/{{ app_name }}/venv"
 
 - name: install modules in a virtualenv
@@ -41,7 +41,7 @@
 - name: Copy nginx app server block
   become: yes
   template:
-    src: edu-flask-app.conf
-    dest: /etc/nginx/conf.d/edu-flask-app.conf
+    src: app.conf
+    dest: /etc/nginx/conf.d/app.conf
   notify: reload nginx
 
