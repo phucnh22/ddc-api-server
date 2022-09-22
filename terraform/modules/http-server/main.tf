@@ -1,4 +1,5 @@
 data "aws_caller_identity" "current" {}
+
 #https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
 resource "aws_iam_policy" "ec2_policy" {
   name        = "ec2_policy"
