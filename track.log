@@ -1,0 +1,4 @@
+{'userId': '025', 'events': [{'eventName': 'string', 'metadata': {}, 'timestampUTC': 1663793818}]}
+{'userId': '024', 'events': [{'eventName': 'string', 'metadata': {}, 'timestampUTC': 1663793819}]}
+{'userId': '021', 'events': [{'eventName': 'string', 'metadata': {}, 'timestampUTC': 1663793827}]}
+{'userId': '012', 'events': [{'eventName': 'string', 'metadata': {}, 'timestampUTC': 1663793827}]}
