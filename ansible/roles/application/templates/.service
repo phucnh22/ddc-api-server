@@ -1,17 +1,13 @@
 [Unit]
-Description=Gunicorn instance to serve edu-flask-app
+Description=Gunicorn instance to serve {{ app_name }}
 After=network.target
 
 [Service]
 User=ubuntu
 Group=www-data
-WorkingDirectory=/home/ubuntu/edu-flask-app
-Environment="PATH=/home/ubuntu/edu-flask-app/venv/bin"
-Environment="database_user={{ database_user }}"
-Environment="database_password={{ database_password }}"
-Environment="database_name={{ database_name }}"
-Environment="database_host={{ database_host }}"
-ExecStart=/home/ubuntu/edu-flask-app/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:5000 wsgi:app
+WorkingDirectory=/home/ubuntu/{{ app_name }}
+Environment="PATH=/home/ubuntu/{{ app_name }}/venv/bin"
+ExecStart=/home/ubuntu/{{ app_name }}/venv/bin/gunicorn main:app --workers 3 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 
 
 [Install]
 WantedBy=multi-user.target
