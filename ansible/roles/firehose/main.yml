@@ -1,0 +1,38 @@
+---
+- name: ensure a directory exists or create it
+  become: yes
+  file: 
+    path: /opt/amazon-kinesis-agent
+    state: directory
+
+- name: clone installation repo to the directory
+  become: yes
+  git:
+    repo: 'https://github.com/awslabs/amazon-kinesis-agent.git'
+    dest: /opt/amazon-kinesis-agent
+    update: yes  # Does a git pull if the repo already exists
+
+- name: Remove default agent.json
+  become: yes
+  command: -E /opt/amazon-kinesis-agent/setup --install
+
+- name: Remove default agent.json
+  become: yes
+  file:
+    path: /etc/aws-kinesis/agent.json
+    state: absent
+
+- name: Copy agent.json
+  become: yes
+  copy:
+    src: /home/ubuntu/ddc-api-server/aws-kinesis/agent.json
+    dest: /etc/aws-kinesis/agent.json
+    remote_src: yes
+
+- name: Give permission
+  become: yes
+  command: chown aws-kinesis-agent-user:aws-kinesis-agent-user -R /home/ubuntu/ddc-api-server
+    
+- name: Start service
+  become: yes
+  command: service aws-kinesis-agent start
