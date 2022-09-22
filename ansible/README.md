@@ -5,6 +5,7 @@
 - Create a SSH key pair in AWS > EC2 services > Key pair -> Save the private key (file_name.pem) in your local machine
 
 #### In your local development machine:
+
 - Install Ansibles in ubuntu
 ```
 $ sudo apt-get update
@@ -12,6 +13,10 @@ $ sudo apt-get install software-properties-common
 $ sudo apt-add-repository ppa:ansible/ansible
 $ sudo apt-get update
 $ sudo apt-get install ansible -y
+- To clone the repo:
+```
+git clone https://github.com/phucnh22/ddc-api-server.git
+```
 ```
 - Copy the SSH key to ansible folder
 ```
@@ -42,7 +47,10 @@ ansible-playbook -i hosts install-nginx-and-certs.yml
 ```
 ansible-playbook -i hosts install-app.yml
 ```
-
+- Running the firehose roles to install the firehose agent
+```
+ansible-playbook -i hosts install-firehose.yml
+```
 2.
 
 To ssh to the EC2:
