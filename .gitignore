@@ -1,5 +1,6 @@
 # Local .terraform directories
 **/.terraform/*
+terraform/.terraform/*
 **/.terraform.lock*
 **/reference*
 # .tfstate files
@@ -10,5 +11,6 @@
 *.pem
 
 **/reference
+*/credentials
 
-
+note.md
