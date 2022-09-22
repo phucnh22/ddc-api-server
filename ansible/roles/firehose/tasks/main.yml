@@ -32,10 +32,12 @@
     dest: /etc/aws-kinesis/agent.json
     remote_src: yes
 
+#TODO: change to file module with owner
 - name: Give permission
   become: yes
   command: chown aws-kinesis-agent-user:aws-kinesis-agent-user -R /home/ubuntu/ddc-api-server
-    
+
+#TODO: change to service module   
 - name: Start service
   become: yes
   command: service aws-kinesis-agent start
