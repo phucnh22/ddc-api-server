@@ -26,8 +26,8 @@
     backup: yes
     
 ## set up java runtime for later installing kinesis agent
-- name: Install Java runtime for kinesis agent
+- name: Install Java DK for kinesis agent installation
   become: yes
   apt:
     pkg:
-      - openjdk-8-jre
+      - openjdk-8-jdk
