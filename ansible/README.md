@@ -6,19 +6,21 @@
 
 #### In your local development machine:
 
-- Install Ansibles in ubuntu
+Install Ansibles in ubuntu
 ```
 $ sudo apt-get update
 $ sudo apt-get install software-properties-common
 $ sudo apt-add-repository ppa:ansible/ansible
 $ sudo apt-get update
 $ sudo apt-get install ansible -y
-- To clone the repo:
+```
+
+To clone the repo:
 ```
 git clone https://github.com/phucnh22/ddc-api-server.git
 ```
-```
-- Copy the SSH key to ansible folder
+
+Copy the SSH key to ansible folder
 ```
 cp /mnt/c/Users/Admin/.ssh/phuc_edu.pem /home/phucnh22/ddc-api-server/ansible/ssh_keys/phuc_edu.pem
 ```
