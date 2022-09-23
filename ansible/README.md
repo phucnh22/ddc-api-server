@@ -18,7 +18,7 @@ $ sudo apt-get update
 $ sudo apt-get install ansible -y
 ```
 
-To clone the repo:
+To clone the repo if you haven't:
 ```
 git clone https://github.com/phucnh22/ddc-api-server.git
 ```
