@@ -5,6 +5,7 @@
     state: directory
 
 - name: clone repo to the directory
+  become: yes
   git:
     repo: 'https://github.com/{{ github_user }}/{{ app_name }}.git'
     dest: /home/ubuntu/{{ app_name }}
@@ -30,6 +31,10 @@
     src: .service
     dest: /etc/systemd/system/{{ app_name }}.service 
 
+#TODO: change to file module with owner
+- name: Give permission
+  become: yes
+  command: chmod -R o+rw /home/ubuntu/ddc-api-server
 
 # TODO: try systemd
 - name: start systemd app service
