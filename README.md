@@ -63,5 +63,5 @@ sudo service ddc-api-server status
 
 ---  
 ## Annex
-#### To test your application in local machine
+#### To build your application in local machine with AWS console (click-click-click), please see [note](https://github.com/phucnh22/ddc-api-server/blob/main/local-setup-note.md)
   
