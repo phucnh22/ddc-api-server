@@ -1,10 +1,13 @@
-## To run the project:
+## Run the project with Ansible
 
-#### In AWS:
+#### 1. In AWS:
 - Create an Elastic IP in AWS > VPC services > Elastic IPs
-- Create a SSH key pair in AWS > EC2 services > Key pair -> Save the private key (file_name.pem) in your local machine
+- Assign the elastic IP generated to your domain zone A
+- Create a SSH key pair in AWS > EC2 services > Key pair. Then download and save the private key (RSA format) `file_name.pem` in your local machine (default at: /home/user/.ssh)
 
-#### In your local development machine:
+#### 2. In your local development machine:
+
+Development Ubuntu version: Ubuntu 18.04
 
 Install Ansibles in ubuntu
 ```
@@ -20,41 +23,47 @@ To clone the repo:
 git clone https://github.com/phucnh22/ddc-api-server.git
 ```
 
-Copy the SSH key to ansible folder
+Copy the SSH key to ansible folder. Please make your to not push this key to any public repository
+- For Ubuntu
 ```
-cp /mnt/c/Users/Admin/.ssh/phuc_edu.pem /home/phucnh22/ddc-api-server/ansible/ssh_keys/phuc_edu.pem
+cp /.ssh/key_name.pem /home/user/ddc-api-server/ansible/ssh_keys/key_name.pem
+```
+- For WSL
+```
+cp /mnt/c/Users/UserName/.ssh/key_name.pem /home/user/ddc-api-server/ansible/ssh_keys/key_name.pem
 ```
 - After copying, give root access to the key:
 ```
-sudo chmod 600 /home/phucnh22/ddc-api-server/ansible/ssh_keys/phuc_edu.pem
+sudo chmod 600 /home/user/ddc-api-server/ansible/ssh_keys/key_name.pem
 ```
-#### In `/ansible` folder:
-- Fill in the ansible variables found in ansible/group_vars/all
-- Write your application ansible role by filling in ansible/roles/application. The current contents are an example of setting up a ghost blog and serving
-it behind an nginx reverse proxy
-- Fill in any ssh public keys for admins in the ansible/ssh_keys/authorized_keys
-- Fill in the ip address of the host (refering to the elastic IP you generated) in the ansible/hosts
 
-#### Workflow
-1. Run initial setup
-- Running the setup_instance role
+#### 3. Fill in necessary information
+- Fill in the ansible variables found in `/group_vars/all` 
+- Change the key name and public domain in  `hosts` 
+- Fill in any ssh public keys for admins in the `/ssh_keys/authorized_keys`
+  - To generate your RSE public key, use this command `ssh-keygen -t rsa -b 4096`, the keys should be located in /.ssh/*.pub
+
+#### 4. Workflow
+
+- Make sure to have the ssh key generated from your AWS account for Ansible to SSH to the EC2 instance
+- Running the 4 playbooks for 4 roles
+  - Setup_instance role to install required environment
+  - Nginx roles to install nginx and SSL certificate (Certbot)
+  - Application roles to install the application to the webserver
+  - Firehose roles to install the firehose agent to start streaming to S3 bucket
 ```
 ansible-playbook -i hosts machine-initial-setup.yml
-```
-- Running the nginx roles to install nginx and certificate
-```
 ansible-playbook -i hosts install-nginx-and-certs.yml
-```
-- Running the application roles to install the application to the webserver
-```
 ansible-playbook -i hosts install-app.yml
-```
-- Running the firehose roles to install the firehose agent
-```
 ansible-playbook -i hosts install-firehose.yml
 ```
-2.
-
-To ssh to the EC2:
-`ssh -i "phuc_edu.pem" ubuntu@phucnh22.site`
+- Verified all the service is running by SSH to the server
+```sh
+ssh -i "/.ssh/<your-AWS-key>.pem" ubuntu@<your-domain>
+```
+- Verify the status of the service
+```
+sudo service aws-kinesis-agent status
+sudo service ddc-api-server status
+```
 
